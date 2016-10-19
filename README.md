@@ -19,7 +19,7 @@ git clone http://git.code.sf.net/p/sox/code sox-code
 
 ### Download the prebuilt version.
 
-You can download the version that supports iOS 9.0+ with bitcode support [here]().
+You can download the version that supports iOS 9.0+ with bitcode support [here](https://drive.google.com/open?id=0B2ZE77-A2FLGX2pBTElJRjA3elE).
 
 ### How to use it
 
@@ -27,11 +27,9 @@ Drag both libsox.a and sox.h to your Xcode project. And add them to your target.
 
 Import `sox.h` header. For Swift, you'll need to import `sox.h` in the bridge header.
 
-
-
 <details>
+<summary>Sample Code - Objective-C - Convert RAW PCM into WAV</summary>
 
-<summary>Sample Code - Objective-C - Convert RAW PCM into WAV<summary>
 
 ```objective-c
 BOOL rawPCMReencode(NSURL *srcURL, NSURL *dstURL) {
@@ -112,9 +110,8 @@ BOOL rawPCMReencode(NSURL *srcURL, NSURL *dstURL) {
   }
 }
 ```
+
 </details>
-
-
 
 ### Any Questions
 
