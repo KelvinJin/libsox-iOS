@@ -1,0 +1,80 @@
+# Disallow undefined variables
+set -u
+
+# Min version for sox
+MIN_VERSION="9.0"
+# Set default output folder is build
+OUTPUT_FOLDER=${OUTPUT-build}
+# Set lipo from Xcode
+LIPO=${LIPO-$(xcrun --find lipo)}
+# Set default compiler from Xcode
+CC=${CC-$(xcrun --find gcc)}
+# Set default compiler from Xcode
+CPP=${CPP-$(xcrun --find cpp)}
+
+# Make output folder
+mkdir -p $OUTPUT_FOLDER
+
+function build_sox()
+{
+  if [ -f "Makefile" ];then
+      make distclean
+  fi
+
+  _SDK=$(echo ${SDK} | tr '[:upper:]' '[:lower:]')
+  SDK_ROOT=$(xcrun --sdk ${_SDK} --show-sdk-path)
+  PREFIX="`pwd`/iOS-${PLATFORM}"
+
+  CFLAGS="-arch ${PLATFORM} -pipe -Os -gdwarf-2 -isysroot ${SDK_ROOT} -miphoneos-version-min=${MIN_VERSION} ${BITCODE}"
+  LDFLAGS="-arch ${PLATFORM} -isysroot ${SDK_ROOT}"
+  CPPFLAGS="${CFLAGS}"
+
+  ./configure \
+      CFLAGS="${CFLAGS}" \
+      LDFLAGS="${LDFLAGS}" \
+      CPPFLAGS="${CPPFLAGS}" \
+      --prefix="${PREFIX}" \
+      --host="${HOST}-apple-darwin" \
+      --disable-shared \
+      --enable-static \
+      --with-coreaudio=no
+      "$@"
+
+  make install
+
+  cp "${PREFIX}/lib/libsox.a" "${OUTPUT_FOLDER}/libsox-${PLATFORM}.a"
+}
+
+# Bulid simulator version
+HOST="i686"
+SDK="iPhoneSimulator"
+BITCODE="-fembed-bitcode-marker"
+
+PLATFORM="i386"
+build_sox
+
+PLATFORM="x86_64"
+build_sox
+
+# Build device version
+HOST="arm"
+SDK="iPhoneOS"
+BITCODE="-fembed-bitcode"
+
+PLATFORM="armv7"
+build_sox
+
+PLATFORM="armv7s"
+build_sox
+
+PLATFORM="arm64"
+build_sox
+
+# Remove old libsox.a or lipo will failed
+OUTPUT_LIB=${OUTPUT_FOLDER}/libsox.a
+if [ -f $OUTPUT_LIB ]; then
+    rm $OUTPUT_LIB
+fi
+
+${LIPO} -create ${OUTPUT_FOLDER}/* -output ${OUTPUT_LIB}
+cp "src/sox.h" "${OUTPUT_FOLDER}/sox.h"
