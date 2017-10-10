@@ -11,8 +11,18 @@ You can either build it from the source code by yourself or you can use a prebui
 git clone http://git.code.sf.net/p/sox/code sox-code
 ```
 + Download the build_ios script from this repo and put it into the sox-code folder you just downloaded.
++ Install automake, autoconf as well as libtool. (recommend using `homebrew`)
+```
+brew install automake
+brew install autoconf
+brew install libtool
+```
 + Run it. (You might need to change the minimum iOS version in the script.)
 ```
+# Run this to generate the configure bash script.
+autoreconf -i
+
+# And then run this to build the static library.
 ./build_ios
 ```
 + The libsox.a will be ready in the /build folder together with the sox.h header file.
