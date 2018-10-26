@@ -11,6 +11,7 @@ You can either build it from the source code by yourself or you can use a prebui
 git clone http://git.code.sf.net/p/sox/code sox-code
 ```
 + Download the build_ios script from this repo and put it into the sox-code folder you just downloaded.
++ (Optional) The default sox branch is master which might be broken. You might want to switch to one of the releases.
 + Install automake, autoconf as well as libtool. (recommend using `homebrew`)
 ```
 brew install automake
