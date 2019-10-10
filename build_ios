@@ -76,5 +76,5 @@ if [ -f $OUTPUT_LIB ]; then
     rm $OUTPUT_LIB
 fi
 
-${LIPO} -create ${OUTPUT_FOLDER}/* -output ${OUTPUT_LIB}
+${LIPO} -create ${OUTPUT_FOLDER}/*.a -output ${OUTPUT_LIB}
 cp "src/sox.h" "${OUTPUT_FOLDER}/sox.h"
