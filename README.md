@@ -30,7 +30,7 @@ autoreconf -i
 
 ### Download the prebuilt version.
 
-You can download the version that supports iOS 9.0+ with bitcode support [here](https://drive.google.com/open?id=0B2ZE77-A2FLGX2pBTElJRjA3elE).
+You can download the version that supports iOS 9.0+ with bitcode support [here](https://drive.google.com/file/d/0B2ZE77-A2FLGX2pBTElJRjA3elE/view?usp=sharing&resourcekey=0-bwFn3wI0PKoLE3fevcKRxQ).
 
 ### How to use it
 
